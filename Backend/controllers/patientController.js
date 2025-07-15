@@ -90,13 +90,21 @@ exports.deletePatient = async (req, res) => {
   try {
     const patient = await Patient.findById(req.params.id);
 
-    if (patient && patient.createdBy.toString() === req.user._id.toString()) {
-      await patient.remove();
-      res.json({ message: 'Patient removed' });
-    } else {
-      res.status(404).json({ message: 'Patient not found or unauthorized' });
+    if (!patient) {
+      return res.status(404).json({ message: 'Patient not found' });
     }
+
+    // Check ownership
+    if (patient.createdBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ message: 'Unauthorized' });
+    }
+
+    // Correct way to delete
+    await Patient.findByIdAndDelete(req.params.id);
+
+    res.json({ message: 'Patient removed successfully' });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
 };
+
