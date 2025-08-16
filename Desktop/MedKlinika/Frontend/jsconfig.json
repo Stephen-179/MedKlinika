@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
-  },
-  "include": ["src", "frontend/src/components/ui/tabs.jsx", "frontend/src/components/ui/progress.jsx", "frontend/src/components/ui/accordion.jsx", "frontend/src/components", "frontend/src/services", "frontend/src/lib", "frontend/src/context"]
-}
